@@ -25,4 +25,8 @@ app.use('/countries', countryRouter)
 app.use('/movies', movieRouter)
 app.use('/genres', genreRouter)
 
+
+
+
+
 app.listen(4000)
