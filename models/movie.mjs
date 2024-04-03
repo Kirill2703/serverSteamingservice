@@ -10,11 +10,18 @@ const schema = mongoose.Schema({
   year: { type: Date, required: true },
   countries: [{ type: mongoose.Schema.Types.ObjectId, ref: "Country" }],
   genres: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Genre' }],
+  actors:[{type: mongoose.Schema.Types.ObjectId, ref: 'Actor'}],
   gallery: [{ type: String }],
   trailer: { type: String },
   likes: { type: Number, default: 0},
   dislikes: { type: Number, default: 0 },
-  price: {type: Number, default: 0}
+  price: { type: Number, default: 0 },
+  rating: { type: Number, default: 0 },
+  agerating: { type: String, required: false },
+  runtimes: { type: String, required: false },
+  type: { type: String, required: true },
+  filmmaker: {type: String, required: false}
+  
 });
 
 const Movie = mongoose.model('Movie', schema)

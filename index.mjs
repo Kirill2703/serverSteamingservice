@@ -3,6 +3,7 @@ import dbconnect from "./db/index.mjs";
 import countryRouter from "./routes/countryRouter.mjs";
 import movieRouter from "./routes/movieRouter.mjs";
 import genreRouter from './routes/genreRouter.mjs'
+import actorRouter from './routes/actorRouter.mjs'
 import cors from 'cors'
 
 const app = express();
@@ -24,6 +25,7 @@ app.get('/', (req, res) => {
 app.use('/countries', countryRouter)
 app.use('/movies', movieRouter)
 app.use('/genres', genreRouter)
+app.use('/actors', actorRouter)
 
 
 
