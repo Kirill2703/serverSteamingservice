@@ -6,5 +6,7 @@ const router = express.Router()
 
 router.get('', countryController.all)
 router.post("/", countryController.create);
+router.get('/fill', countryController.fillCountries)
+router.get('/clear',countryController.clearCountries)
 
 export default router

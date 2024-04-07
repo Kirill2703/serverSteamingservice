@@ -1,20 +1,42 @@
-import Country from "../models/country.mjs"
+import axios from "axios";
+import Country from "../models/country.mjs";
 
 const all = async (req, res) => {
-    const countries = await Country.find({}).populate('movies')
-    res.json(countries)
-}
+  const countries = await Country.find({}).populate("movies");
+  res.json(countries);
+};
 
 const create = async (req, res) => {
-    try {
-        const country = new Country(req.body)
-        await country.save()
-        res.json(country)
-    }
+  try {
+    const country = new Country(req.body);
+    await country.save();
+    res.json(country);
+  } catch (error) {
+    res.status(400).json(error);
+  }
+};
 
-    catch (error) {
-        res.status(400).json(error)
-    }
-}
+const fillCountries = async (req, res) => {
+  try {
+    const responce = await axios.get("https://restcountries.com/v3.1/all");
+    const countries = responce.data;
+    countries.map(async (country) => {
+      try {const NewCountry = new Country({ title: country.name.common });
+            await NewCountry.save();
+        }
+      catch (error) {
+          console.log(error);
+        }
+    });
+    res.send("Countries filled");
+  } catch (error) {
+    console.log(error);
+  }
+};
 
-export default {all, create}
+const clearCountries = async (req, res) => {
+  await Country.deleteMany({});
+  res.send("Clear");
+};
+
+export default { all, create, fillCountries, clearCountries };

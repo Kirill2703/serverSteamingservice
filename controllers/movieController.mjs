@@ -2,10 +2,12 @@ import Country from "../models/country.mjs";
 import Genre from "../models/genre.mjs";
 import Actor from '../models/actor.mjs'
 import Movie from "../models/movie.mjs";
+import Type from "../models/type.mjs";
+import Filmmaker from "../models/filmmaker.mjs";
 
 
 const all = async (req, res) => {
-  try {const allModels = await Movie.find({}).populate("countries").populate('genres').populate('actors');
+  try {const allModels = await Movie.find({}).populate("countries").populate('genres').populate('actors').populate('types').populate('filmmakers');
     res.json(allModels);
   }
   catch (error){
@@ -18,6 +20,7 @@ const create = async (req, res) => {
   try {
     const movie = new Movie(req.body);
     await movie.save();
+    
 
     //странам добавить фильм который мы добавляем сейчас
     const countries = req.body.countries; // массив айди стран
@@ -39,6 +42,20 @@ const create = async (req, res) => {
       const actor = await Actor.findById(actorId)
       actor.movies.push(movie._id)
       await actor.save()
+    })
+
+    const types = req.body.types
+    types.map(async (typeId) => {
+      const type = await Type.findById(typeId)
+      type.movies.push(type._id)
+      await type.save()
+    })
+
+    const fillmakers = req.body.fillmakers
+    fillmakers.map(async (filmmakerId) => {
+      const filmmaker = await Filmmaker.findById(filmmakerId)
+      filmmaker.movies.push(filmmaker._id)
+      await filmmaker.save()
     })
 
     res.json(movie);
