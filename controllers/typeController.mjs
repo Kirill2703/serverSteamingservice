@@ -2,7 +2,7 @@ import Type from "../models/type.mjs"
 
 
 const all = async (req, res) => {
-    const types = await Type.find({}).populate('Movie')
+    const types = await Type.find({}).populate('movies')
     res.json(types)
 }
 
