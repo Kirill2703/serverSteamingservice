@@ -15,4 +15,30 @@ const create = async (req, res) => {
   }
 };
 
-export default { all, create };
+const update = async (req, res) => {
+  const id = req.params.id;
+
+  try {
+    await Actor.findByIdAndUpdate(id, req.body);
+    res.json({
+      massage: "Actor update",
+    });
+  } catch (error) {
+    res.status(400).json(error);
+  }
+};
+
+const remove = async (req, res) => {
+  const id = req.params.id;
+
+  try {
+    await Actor.findByIdAndDelete(id);
+    res.json({
+      massage: "Actor deleted",
+    });
+  } catch (error) {
+    res.status(400).json(error);
+  }
+};
+
+export default { all, create, update, remove };
