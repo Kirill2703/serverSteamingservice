@@ -2,7 +2,7 @@ import axios from "axios";
 import Country from "../models/country.mjs";
 
 const all = async (req, res) => {
-  const countries = await Country.find({}).populate("movies");
+  const countries = await Country.find({}).sort({title: 'asc'}).populate("movies");
   res.json(countries);
 };
 

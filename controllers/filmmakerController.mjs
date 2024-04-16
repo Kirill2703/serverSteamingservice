@@ -45,4 +45,4 @@ const remove = async (req, res) => {
   }
 };
 
-export default {all, create}
+export default {all, create, update, remove}

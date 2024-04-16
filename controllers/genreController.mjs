@@ -21,7 +21,8 @@ const update = async (req, res) => {
   try {
     await Genre.findByIdAndUpdate(id, req.body)
     res.json({
-      massage: 'Genre update'
+      message: 'Genre update'
+      
     })
   }
 
@@ -36,7 +37,7 @@ const remove = async (req, res) => {
   try {
     await Genre.findByIdAndDelete(id);
     res.json({
-      massage: "Genre deleted",
+      message: "Genre deleted",
     });
   } catch (error) {
     res.status(400).json(error);

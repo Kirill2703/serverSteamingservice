@@ -5,23 +5,22 @@ const schema = mongoose.Schema({
   img: {
     type: String,
     default:
-      "https://t4.ftcdn.net/jpg/04/73/25/49/360_F_473254957_bxG9yf4ly7OBO5I0O5KABlN930GwaMQz.jpg",
+      "https://images.unsplash.com/photo-1712610611837-c277a56b8d58?q=80&w=1755&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
   },
   year: { type: String, required: true },
   countries: [{ type: mongoose.Schema.Types.ObjectId, ref: "Country" }],
-  genres: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Genre' }],
-  actors:[{type: mongoose.Schema.Types.ObjectId, ref: 'Actor'}],
+  genres: [{ type: mongoose.Schema.Types.ObjectId, ref: "Genre" }],
+  actors: [{ type: mongoose.Schema.Types.ObjectId, ref: "Actor" }],
   gallery: [{ type: String }],
   trailer: { type: String },
-  likes: { type: Number, default: 0},
+  likes: { type: Number, default: 0 },
   dislikes: { type: Number, default: 0 },
   price: { type: Number, default: 0 },
   rating: { type: Number, default: 0 },
   agerating: { type: String, required: false },
   runtimes: { type: String, required: false },
-  types: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Type' }],
-  filmmakers: [{type: mongoose.Schema.Types.ObjectId, ref: 'Filmmaker'}]
-  
+  types: [{ type: mongoose.Schema.Types.ObjectId, ref: "Type" }],
+  filmmakers: [{ type: mongoose.Schema.Types.ObjectId, ref: "Filmmaker" }],
 });
 
 const Movie = mongoose.model('Movie', schema)

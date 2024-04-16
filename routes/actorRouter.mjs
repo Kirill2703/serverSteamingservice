@@ -5,5 +5,7 @@ const router = express.Router();
 
 router.get("", actorController.all);
 router.post("/", actorController.create);
+router.put("/:id", actorController.update);
+router.delete("/:id", actorController.remove);
 
 export default router;
