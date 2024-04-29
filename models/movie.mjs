@@ -17,6 +17,8 @@ const schema = mongoose.Schema({
   dislikes: { type: Number, default: 0 },
   price: { type: Number, default: 0 },
   rating: { type: Number, default: 0 },
+  ratingIMDB: { type: String, default: "IMDB Rating" },
+  description:{type:String, required:false},
   agerating: { type: String, required: false },
   runtimes: { type: String, required: false },
   types: [{ type: mongoose.Schema.Types.ObjectId, ref: "Type" }],

@@ -7,5 +7,6 @@ router.get("", filmmakerController.all);
 router.post("/", filmmakerController.create);
 router.put("/:id", filmmakerController.update);
 router.delete("/:id", filmmakerController.remove);
+router.get("/:id", filmmakerController.getFilmmaker);
 
 export default router;

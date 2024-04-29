@@ -39,4 +39,10 @@ const clearCountries = async (req, res) => {
   res.send("Clear");
 };
 
-export default { all, create, fillCountries, clearCountries };
+const getCountry = async (req, res) => {
+  const country = await Country.findById(req.params.id)
+  res.send(country)
+}
+
+
+export default { all, create, fillCountries, clearCountries, getCountry };

@@ -43,4 +43,9 @@ const remove = async (req, res) => {
   }
 };
 
-export default {all, create, update, remove}
+const getType = async (req, res) => {
+  const type = await Type.findById(req.params.id);
+  res.send(type);
+};
+
+export default {all, create, update, remove, getType}

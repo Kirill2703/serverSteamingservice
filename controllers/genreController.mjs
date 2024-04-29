@@ -44,4 +44,9 @@ const remove = async (req, res) => {
   }
 };
 
-export default { all, create, update, remove };
+const getGenre = async (req, res) => {
+  const genre = await Genre.findById(req.params.id);
+  res.send(genre);
+};
+
+export default { all, create, update, remove, getGenre };

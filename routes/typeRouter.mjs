@@ -7,5 +7,6 @@ router.get("", typeController.all);
 router.post("/", typeController.create);
 router.put("/:id", typeController.update);
 router.delete("/:id", typeController.remove);
+router.get('/:id', typeController.getType)
 
 export default router;

@@ -41,4 +41,9 @@ const remove = async (req, res) => {
   }
 };
 
-export default { all, create, update, remove };
+const getActor = async (req, res) => {
+  const actor = await Actor.findById(req.params.id);
+  res.send(actor);
+};
+
+export default { all, create, update, remove, getActor };

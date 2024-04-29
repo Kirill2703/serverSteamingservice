@@ -45,4 +45,9 @@ const remove = async (req, res) => {
   }
 };
 
-export default {all, create, update, remove}
+const getFilmmaker = async (req, res) => {
+  const filmmaker = await Filmmaker.findById(req.params.id);
+  res.send(filmmaker);
+};
+
+export default {all, create, update, remove, getFilmmaker}

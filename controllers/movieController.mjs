@@ -78,9 +78,13 @@ const update = async (req, res) => {
 
   try {
     await Movie.findByIdAndUpdate(id, req.body);
-    res.json({
-      massage: "Movie update",
-    });
+    const movie = await Movie.findById(id)
+      .populate("countries")
+      .populate("genres")
+      .populate("actors")
+      .populate("types")
+      .populate("filmmakers");
+    res.send({ movie });
   } catch (error) {
     res.status(400).json(error);
   }
@@ -99,4 +103,17 @@ const remove = async (req, res) => {
   }
 };
 
-export default { all, create, update, remove };
+const setLikes = async (req, res) => {
+  const movie = await Movie.findById(req.params.id)
+  movie.likes = movie.likes + 1
+  await movie.save()
+  res.send('OK')
+}
+
+const setDislikes = async (req, res) => {
+  const movie = await Movie.findById(req.params.id);
+  movie.dislikes = movie.dislikes + 1;
+  await movie.save();
+  res.send("OK");
+};
+export default { all, create, update, remove, setLikes, setDislikes };
