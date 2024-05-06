@@ -41,7 +41,7 @@ app.use("/genres", genreRouter);
 app.use("/actors", actorRouter);
 app.use("/types", typeRouter);
 app.use("/filmmakers", filmmakerRouter);
-app.use('', authRouter)
+app.use("", authRouter);
 
 app.post("/upload-img", upload.single("img"), function (req, res, next) {
   const file = req.file;
@@ -54,17 +54,49 @@ app.post("/upload-img", upload.single("img"), function (req, res, next) {
   }
 });
 
-app.post("/upload-img-gallery", upload.single("gallery"), function (req, res, next) {
-  const file = req.file;
-  console.log(file);
+app.post(
+  "/upload-actor-photo",
+  upload.single("actorPhoto"),
+  function (req, res, next) {
+    const file = req.file;
+    console.log(file);
 
-  if (!file) {
-    res.send("Error");
-  } else {
-    res.send("OK");
+    if (!file) {
+      res.send("Error");
+    } else {
+      res.send("OK");
+    }
   }
-});
+);
 
+app.post(
+  "/upload-filmmaker-photo",
+  upload.single("filmmakerPhoto"),
+  function (req, res, next) {
+    const file = req.file;
+    console.log(file);
 
+    if (!file) {
+      res.send("Error");
+    } else {
+      res.send("OK");
+    }
+  }
+);
+
+app.post(
+  "/upload-img-gallery",
+  upload.single("gallery"),
+  function (req, res, next) {
+    const file = req.file;
+    console.log(file);
+
+    if (!file) {
+      res.send("Error");
+    } else {
+      res.send("OK");
+    }
+  }
+);
 
 app.listen(4000);
