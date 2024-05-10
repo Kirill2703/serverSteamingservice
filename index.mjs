@@ -9,6 +9,7 @@ import filmmakerRouter from "./routes/filmmakerRouter.mjs";
 import cors from "cors";
 import multer from "multer";
 import authRouter from "./routes/authRouter.mjs";
+import subscribeRouter from "./routes/subscribeRouter.mjs"
 
 var storage = multer.diskStorage({
   destination: "public/uploads/",
@@ -42,6 +43,7 @@ app.use("/actors", actorRouter);
 app.use("/types", typeRouter);
 app.use("/filmmakers", filmmakerRouter);
 app.use("", authRouter);
+app.use('/subscribe', subscribeRouter)
 
 app.post("/upload-img", upload.single("img"), function (req, res, next) {
   const file = req.file;
@@ -55,8 +57,8 @@ app.post("/upload-img", upload.single("img"), function (req, res, next) {
 });
 
 app.post(
-  "/upload-actor-photo",
-  upload.single("actorPhoto"),
+  "/upload-photo-actor",
+  upload.single("photoActor"),
   function (req, res, next) {
     const file = req.file;
     console.log(file);

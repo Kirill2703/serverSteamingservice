@@ -24,6 +24,7 @@ const login = async (req, res) => {
     });
   }
 
+
   const checkPassword = await bcrypt.compare(req.body.password, user.password);
 
   if (!checkPassword) {
@@ -50,6 +51,49 @@ const login = async (req, res) => {
   });
 };
 
+//  const recoverPassword = async (req, res) => {
+//    try {
+//      const { email, password } = req.body;
+
+//      // Хеширование нового пароля
+//      const hashedPassword = await bcrypt.hash(password, 10);
+
+//      // Найти пользователя по его email
+//      const user = await User.findOne({ email });
+
+//      // Проверка наличия пользователя
+//      if (!user) {
+//        return res.status(404).json({
+//          status: "error",
+//          message: "User Not Found",
+//        });
+//      }
+
+//      // Обновление пароля пользователя
+//      user.password = hashedPassword;
+//      await user.save();
+
+//      // Отправить уведомление пользователю о смене пароля
+//      await mailRecover(
+//        email,
+//        "Password Recovery",
+//        "Your password has been successfully updated."
+//      );
+
+//      res.json({
+//        status: "success",
+//        message: "Password updated successfully",
+//      });
+//    } catch (error) {
+//      console.error(error);
+//      res.status(500).json({
+//        status: "error",
+//        message: "Failed to update password",
+//      });
+//    }
+//  };
+
+
 const getAuthUser = async (req, res) => {
   const user = await User.findById(req.user.userId);
   res.json(user);
@@ -65,12 +109,30 @@ const mail = async (email, name) => {
   });
 };
 
+// const mailRecover = async (email, name) => {
+//   const info = await transporter.sendMail({
+//     from: '"testPage', // sender address
+//     to: email, // list of receivers
+//     subject: "Change your password", // Subject line
+//     html: `<h2>Hello, ${name}</h2>
+//   <a href='http://localhost:3000/activate?email=${email}'> Change your password </a>`, // html body
+//   });
+// };
+
 const activateUser = async (req, res) => {
-  const user = await User.findOne({ email: req.body.email })
-    user.activate = true
-    await user.save()
-    res.send({
-        status: 'success'
-    })
-}
-export default { register, login, getAuthUser, mail,  activateUser };
+  const user = await User.findOne({ email: req.body.email });
+  user.activate = true;
+  await user.save();
+  res.send({
+    status: "success",
+  });
+};
+export default {
+  register,
+  login,
+  getAuthUser,
+  mail,
+  // mailRecover,
+  activateUser,
+  // recoverPassword,
+};

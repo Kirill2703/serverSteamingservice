@@ -9,8 +9,6 @@ const schema = mongoose.Schema({
   countries: [{ type: mongoose.Schema.Types.ObjectId, ref: "Country" }],
   genres: [{ type: mongoose.Schema.Types.ObjectId, ref: "Genre" }],
   actors: [{ type: mongoose.Schema.Types.ObjectId, ref: "Actor" }],
-  actorPhoto: [{ type: mongoose.Schema.Types.ObjectId, ref: "PhotoActor" }],
-  filmmakerPhoto: [{ type: mongoose.Schema.Types.ObjectId, ref: "PhotoFilmmaker" }],
   gallery: [{ type: String }],
   trailer: { type: String },
   likes: { type: Number, default: 0 },
