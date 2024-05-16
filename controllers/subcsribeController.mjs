@@ -8,7 +8,7 @@ const allSubscribesUsers = async (req, res) => {
 }
 
 const allSubcsribesUserById = async (req, res) => {
-  const responce = await Subscribe.find({user_id: req.body.id}).populate("User");
+  const responce = await Subscribe.find({user_id: req.body.id})
   res.json(responce);
 };
 

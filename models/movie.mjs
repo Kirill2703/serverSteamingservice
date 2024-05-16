@@ -15,7 +15,7 @@ const schema = mongoose.Schema({
   dislikes: { type: Number, default: 0 },
   price: { type: Number, default: 0 },
   rating: { type: Number, default: 0 },
-  ratingIMDB: { type: String, default: "IMDB Rating" },
+  ratingIMDB: { type: String, default: "IMDB" },
   description: { type: String, required: false },
   agerating: { type: String, required: false },
   runtimes: { type: String, required: false },

@@ -51,47 +51,67 @@ const login = async (req, res) => {
   });
 };
 
-//  const recoverPassword = async (req, res) => {
-//    try {
-//      const { email, password } = req.body;
+ const recoverPassword = async (req, res) => {
+   try {
+     const { email } = req.body;
 
-//      // Хеширование нового пароля
-//      const hashedPassword = await bcrypt.hash(password, 10);
+     // Найти пользователя по его email
+     const user = await User.findOne({ email });
 
-//      // Найти пользователя по его email
-//      const user = await User.findOne({ email });
+     // Проверка наличия пользователя
+     if (!user) {
+       return res.status(404).json({
+         status: "error",
+         message: "User Not Found",
+       });
+     }
 
-//      // Проверка наличия пользователя
-//      if (!user) {
-//        return res.status(404).json({
-//          status: "error",
-//          message: "User Not Found",
-//        });
-//      }
+     // Отправить уведомление пользователю о смене пароля
+     await mailRecover(email, user.name);
 
-//      // Обновление пароля пользователя
-//      user.password = hashedPassword;
-//      await user.save();
+     res.json({
+       status: "success",
+     });
+   } catch (error) {
+     res.status(500).json({
+       status: "error",
+       message: "Failed to update password",
+     });
+   }
+};
+ const updatePassword = async (req, res) => {
+   try {
+     const { email, password } = req.body;
 
-//      // Отправить уведомление пользователю о смене пароля
-//      await mailRecover(
-//        email,
-//        "Password Recovery",
-//        "Your password has been successfully updated."
-//      );
+     // Найти пользователя по его email
+     const user = await User.findOne({ email });
 
-//      res.json({
-//        status: "success",
-//        message: "Password updated successfully",
-//      });
-//    } catch (error) {
-//      console.error(error);
-//      res.status(500).json({
-//        status: "error",
-//        message: "Failed to update password",
-//      });
-//    }
-//  };
+     // Проверка наличия пользователя
+     if (!user) {
+       return res.status(404).json({
+         status: "error",
+         message: "User Not Found",
+       });
+     }
+
+     user.password = await bcrypt.hash(password, 10);
+     await user.save()
+
+
+
+     // Отправить уведомление пользователю о смене пароля
+     await mailUpdate(email, user.name);
+
+     res.json({
+       status: "success",
+     });
+   } catch (error) {
+     res.status(500).json({
+       status: "error",
+       message: "Failed to update password",
+     });
+   }
+ };
 
 
 const getAuthUser = async (req, res) => {
@@ -101,23 +121,33 @@ const getAuthUser = async (req, res) => {
 
 const mail = async (email, name) => {
   const info = await transporter.sendMail({
-    from: '"testPage', // sender address
-    to: email, // list of receivers
-    subject: "Activete your account", // Subject line
+    from: "testPage", 
+    to: email, 
+    subject: "Activate your account", 
     html: `<h2>Welcome, ${name}</h2>
-  <a href='http://localhost:3000/activate?email=${email}'> Activate your account </a>`, // html body
+  <a href='http://localhost:3000/activate?email=${email}'> Activate your account </a>`, 
   });
 };
 
-// const mailRecover = async (email, name) => {
-//   const info = await transporter.sendMail({
-//     from: '"testPage', // sender address
-//     to: email, // list of receivers
-//     subject: "Change your password", // Subject line
-//     html: `<h2>Hello, ${name}</h2>
-//   <a href='http://localhost:3000/activate?email=${email}'> Change your password </a>`, // html body
-//   });
-// };
+const mailRecover = async (email, name) => {
+  const info = await transporter.sendMail({
+    from: 'testPage', 
+    to: email, // 
+    subject: "Change your password", 
+    html: `<h2>Hello, ${name}</h2>
+  <a href='http://localhost:3000/change-password?email=${email}'> Change your password </a>`, 
+  });
+};
+const mailUpdate = async (email, name) => {
+  const info = await transporter.sendMail({
+    from: "testPage",
+    to: email, //
+    subject: "Change your password",
+    html: `<h2>Hello, ${name}</h2>
+    Password  is update!
+   <a href='http://localhost:3000/login> </a>`,
+  });
+};
 
 const activateUser = async (req, res) => {
   const user = await User.findOne({ email: req.body.email });
@@ -132,7 +162,7 @@ export default {
   login,
   getAuthUser,
   mail,
-  // mailRecover,
   activateUser,
-  // recoverPassword,
+  recoverPassword,
+  updatePassword,
 };

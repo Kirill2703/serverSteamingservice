@@ -17,7 +17,8 @@ const schema = new mongoose.Schema({
       message: (props) => `${props.value} is not a valid password!`,
     },
   },
-  createdAt: {type:Date, default: new Date()}
+  createdAt: { type: Date, default: new Date() },
+  subscribe: [{ type: mongoose.Schema.Types.ObjectId, ref: "Subscribe" }]
 });
 
 // schema.pre('save', async function () {
