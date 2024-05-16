@@ -21,6 +21,7 @@ const schema = mongoose.Schema({
   runtimes: { type: String, required: false },
   types: [{ type: mongoose.Schema.Types.ObjectId, ref: "Type" }],
   filmmakers: [{ type: mongoose.Schema.Types.ObjectId, ref: "Filmmaker" }],
+  createdAt: { type: Date, default: Date.now },
 });
 
 const Movie = mongoose.model('Movie', schema)

@@ -8,7 +8,7 @@ const allSubscribesUsers = async (req, res) => {
 }
 
 const allSubcsribesUserById = async (req, res) => {
-  const responce = await Subscribe.find({user_id: req.body.id})
+  const responce = await Subscribe.find({user_id: req.params.id})
   res.json(responce);
 };
 
