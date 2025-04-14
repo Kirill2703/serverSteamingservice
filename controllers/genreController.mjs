@@ -22,7 +22,6 @@ const update = async (req, res) => {
     await Genre.findByIdAndUpdate(id, req.body)
     res.json({
       message: 'Genre update'
-      
     })
   }
 
